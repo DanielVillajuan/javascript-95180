@@ -1,0 +1,13 @@
+
+<div>
+    {{#if isAuth}}
+        {{#each payload}}
+            <p>nombre: {{this.username}}</p>
+            <p>email: {{this.email}}</p>
+            <hr >
+        {{/each}}
+    {{else}}
+        <div>No podes ver a los usuarios</div>
+    {{/if}}
+    
+</div>
