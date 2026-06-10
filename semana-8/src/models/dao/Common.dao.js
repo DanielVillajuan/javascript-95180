@@ -4,18 +4,21 @@ export class Common {
     }
 
     async getAll(){
+        const result = await this.model.paginate({},{sort: {nombre: 1}, populate: {
+            path: "materias.materiaId",
+            select: "descripcion cupo inscriptos"
+        }})
+        return result
         try{
-            const result = await this.model.find()
-            return result
         }catch (e){
             return null
         }
     }
 
     async getById(id){
+        const result = await this.model.findById(id).populate({path: "materias.materiaId", select: "descripcion cupo isncriptos"})
+        return result
         try{
-            const result = await this.model.findById(id)
-            return result
         }catch (e){
             return null
         }

@@ -3,6 +3,10 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import { AlumnoModel } from './models/alumnos.model.js'
 import { AlumnoDao } from './models/dao/Alumno.dao.js'
+import { MateriasModel } from './models/materias.model.js'
+
+// mongoose-paginate-v2
+
 dotenv.config()
 
 const AlumnoService = new AlumnoDao(AlumnoModel)
@@ -21,11 +25,11 @@ app.get('/alumnos', async (req, res) => {
 
 app.get('/alumnos/:id', async (req, res) => {
     const id = req.params.id
+    const resultado = await AlumnoService.getById(id)
+    res.json({
+        payload: resultado
+    })
     try{
-        const resultado = await AlumnoService.getById(id)
-        res.json({
-            payload: resultado
-        })
     } catch (e) {
         res.status(404).json({
             payload: "error id no existe"

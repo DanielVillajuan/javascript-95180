@@ -1,31 +1,38 @@
 import { model, Schema } from 'mongoose'
+import mongoosePaginateV2 from 'mongoose-paginate-v2'
 
 const alumnoColl = 'alumnos'
 
 const alumnoSchema = new Schema({
     nombre: {
         type: String,
-        require: true,
+        required: true,
     },
     apellido: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
-        require: true,
-        unique: true
+        required: true
     },
     dni: {
         type: String,
-        require: true,
-        unique: true
+        required: true,
+        unique: true,   
     },
     direccion: String,
     materias: {
-        type: Array,
+        type: [{
+            materiaId: {
+                type: Schema.Types.ObjectId,
+                ref: "materias"
+            }
+        }],
         default: []
     }
 })
+
+alumnoSchema.plugin(mongoosePaginateV2)
 
 export const AlumnoModel = model(alumnoColl, alumnoSchema)
